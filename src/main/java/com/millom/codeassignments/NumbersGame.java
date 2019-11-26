@@ -2,7 +2,7 @@ package com.millom.codeassignments;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletionStage;
 
 public class NumbersGame {
   // todo: implement holder of input values
@@ -65,27 +65,27 @@ public class NumbersGame {
 
   /**
    * Sum of numbers, async computation
-   * @return a completable future that will deliver the sum
+   * @return a completion stage that will deliver the sum
    */
-  public Future<Long> sumAsync(){
+  public CompletionStage<Long> sumAsync(){
     // todo: implement me
     return CompletableFuture.supplyAsync(() -> 100L);
   }
 
   /**
    * Sum of even numbers, async computation
-   * @return a completable future that will deliver the sum
+   * @return a completion stage that will deliver the sum
    */
-  public Future<Long> sumOfEvensAsync(){
+  public CompletionStage<Long> sumOfEvensAsync(){
     // todo: implement me
     return CompletableFuture.supplyAsync(() -> 100L);
   }
 
   /**
    * Sum of odd numbers, async computation.
-   * @return a completable future that will deliver the sum
+   * @return a completion stage that will deliver the sum
    */
-  public Future<Long> sumOfOddsAsync(){
+  public CompletionStage<Long> sumOfOddsAsync(){
     // todo: implement me
     return CompletableFuture.supplyAsync(() -> 100L);
   }
