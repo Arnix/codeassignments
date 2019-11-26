@@ -61,7 +61,7 @@ public class TestNumbersGame {
     // todo: set correct expectation
     Long expectedSum = 100L;
     // todo: implement the assertion of the result
-    // Implementation hint: look at #CompletionStage.thenApply
+    // Implementation hint: look at #CompletionStage.thenAccept
 
   }
 
@@ -70,7 +70,7 @@ public class TestNumbersGame {
     // todo: set correct expectation
     Long expectedSum = 88L;
     // todo: implement the assertion of the result
-    // Implementation hint: look at #CompletionStage.thenApply
+    // Implementation hint: look at #CompletionStage.thenAccept
   }
 
   @Test
@@ -78,7 +78,7 @@ public class TestNumbersGame {
     // todo: set correct expectation
     Long expectedSum = 88L;
     // todo: implement the assertion of the result
-    // Implementation hint: look at #CompletionStage.thenApply
+    // Implementation hint: look at #CompletionStage.thenAccept
   }
 
   @Test
