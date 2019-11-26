@@ -73,7 +73,7 @@ public class NumbersGame {
   }
 
   /**
-   * Sum of numbers, async computation
+   * Sum of even numbers, async computation
    * @return a completable future that will deliver the sum
    */
   public Future<Long> sumOfEvensAsync(){
@@ -82,7 +82,7 @@ public class NumbersGame {
   }
 
   /**
-   * Sum of numbers, async computation
+   * Sum of odd numbers, async computation.
    * @return a completable future that will deliver the sum
    */
   public Future<Long> sumOfOddsAsync(){
