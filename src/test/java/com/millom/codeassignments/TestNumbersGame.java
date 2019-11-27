@@ -65,12 +65,20 @@ public class TestNumbersGame {
 
   }
 
+  /*
+   * If you are unfamiliar with completable futures, there are lots of information available
+   * Google is your friend.
+   * This is a good one: https://www.baeldung.com/java-completablefuture
+   */
+
   @Test
   public void testAsyncSumOfOdds() throws ExecutionException, InterruptedException {
     // todo: set correct expectation
     Long expectedSum = 88L;
     // todo: implement the assertion of the result
     // Implementation hint: look at #CompletionStage.thenAccept
+    // Also remember to wait for the completion of the test before continuing the test
+    // for instance, use a CountdownLatch and wait for it outside
   }
 
   @Test
@@ -79,6 +87,8 @@ public class TestNumbersGame {
     Long expectedSum = 88L;
     // todo: implement the assertion of the result
     // Implementation hint: look at #CompletionStage.thenAccept
+    // Also remember to wait for the completion of the test before continuing the test
+    // for instance, use a CountdownLatch and wait for it outside
   }
 
   @Test
@@ -87,5 +97,7 @@ public class TestNumbersGame {
     // todo: implement the assertion of the result
     // Implementation hint: see if you can combine the previous three methods in a smart way using
     // the completion stages
+    // Also remember to wait for the completion of the test before continuing the test
+    // for instance, use a CountdownLatch and wait for it outside
   }
 }
