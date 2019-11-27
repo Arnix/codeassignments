@@ -14,7 +14,8 @@ public class NumbersGame {
   /**
    * Find closest numbers
    *
-   * @return the distance between the two closest numbers in the set
+   * @return the distance between the two closest numbers in the set,
+   * the smallest difference between any element in the set of input values.
    */
   public int closestNumbers() {
     // todo: implement me
