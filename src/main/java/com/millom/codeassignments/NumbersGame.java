@@ -1,14 +1,17 @@
 package com.millom.codeassignments;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 public class NumbersGame {
-  // todo: implement holder of input values
+  private List<Integer> numbers;
 
   public NumbersGame(Integer... numbers) {
-    // todo: implement me
+      this.numbers = Arrays.asList(numbers);
   }
 
   /**
@@ -18,8 +21,14 @@ public class NumbersGame {
    * the smallest difference between any element in the set of input values.
    */
   public int closestNumbers() {
-    // todo: implement me
-    return 0;
+    List<Integer> sortedNumbers = this.getSortedNumbers();
+    int diff  = Integer.MAX_VALUE;
+
+    for (int i = 0; i<sortedNumbers.size() -1; i++)
+        if (sortedNumbers.get(i+1) - sortedNumbers.get(i)<diff){
+            diff = sortedNumbers.get(i+1) - sortedNumbers.get(i);
+        }
+        return diff;
   }
 
   /**
@@ -28,8 +37,7 @@ public class NumbersGame {
    * @return the sorted numbers
    */
   public List<Integer> getSortedNumbers() {
-    // todo: implement me
-    return null;
+    return numbers.stream().sorted().collect(Collectors.toList());
   }
 
   /**
@@ -38,8 +46,7 @@ public class NumbersGame {
    * @return the sum
    */
   public long sum() {
-    // todo: implement me
-    return 0L;
+    return numbers.stream().mapToInt(Integer::intValue).sum();
   }
 
   /**
@@ -49,8 +56,7 @@ public class NumbersGame {
    * @return the sum of odd numbers
    */
   public long sumOfOdds() {
-    // todo: implement me
-    return 0L;
+      return numbers.stream().filter(number -> number%2!=0).mapToInt(Integer::intValue).sum();
   }
 
   /**
@@ -60,8 +66,7 @@ public class NumbersGame {
    * @return the sum of even numbers
    */
   public long sumOfEvens() {
-    // todo: implement me
-    return 0L;
+      return numbers.stream().filter(number -> number%2==0).mapToInt(Integer::intValue).sum();
   }
 
   /**
@@ -69,8 +74,7 @@ public class NumbersGame {
    * @return a completion stage that will deliver the sum
    */
   public CompletionStage<Long> sumAsync(){
-    // todo: implement me
-    return CompletableFuture.supplyAsync(() -> 100L);
+    return CompletableFuture.supplyAsync(this::sum);
   }
 
   /**
@@ -79,7 +83,7 @@ public class NumbersGame {
    */
   public CompletionStage<Long> sumOfEvensAsync(){
     // todo: implement me
-    return CompletableFuture.supplyAsync(() -> 100L);
+    return CompletableFuture.supplyAsync(this::sumOfEvens);
   }
 
   /**
@@ -88,6 +92,6 @@ public class NumbersGame {
    */
   public CompletionStage<Long> sumOfOddsAsync(){
     // todo: implement me
-    return CompletableFuture.supplyAsync(() -> 100L);
+    return CompletableFuture.supplyAsync(this::sumOfOdds);
   }
 }
