@@ -24,7 +24,7 @@ public class NumbersGame {
     List<Integer> sortedNumbers = this.getSortedNumbers();
     int diff  = Integer.MAX_VALUE;
 
-    for (int i = 0; i<sortedNumbers.size(); i++)
+    for (int i = 0; i<sortedNumbers.size() -1; i++)
         if (sortedNumbers.get(i+1) - sortedNumbers.get(i)<diff){
             diff = sortedNumbers.get(i+1) - sortedNumbers.get(i);
         }

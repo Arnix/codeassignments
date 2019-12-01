@@ -18,17 +18,12 @@ public class TestNumbersGame {
 
   private NumbersGame numbersGame;
   private static final Integer[] NUMBERS = {3, 9, 50, 15, 99, 7, 98, 65};
-  private CountDownLatch latch = new CountDownLatch(0);
 
   @Before
   public void setup() {
     numbersGame = new NumbersGame(NUMBERS);
   }
 
-  @After
-  public void end() throws InterruptedException {
-      latch.await(500L, TimeUnit.MILLISECONDS);
-  }
   @Test
   public void testClosestNumbers() {
     // todo: set correct expectation
@@ -89,15 +84,13 @@ public class TestNumbersGame {
   @Test
   public void testAsyncSumOfOdds() throws ExecutionException, InterruptedException {
     Long expectedSum = 198L;
-    latch = new CountDownLatch(1);
-    CompletableFuture<Long> longCompletableFuture = numbersGame.sumOfOddsAsync().toCompletableFuture();
+    CountDownLatch latch = new CountDownLatch(1);
+    CompletableFuture<Long> sumOfOddsCompletableFuture = numbersGame.sumOfOddsAsync().toCompletableFuture();
 
-    longCompletableFuture.thenAccept(a ->{
-      Assert.assertEquals(expectedSum,a);
-      latch.countDown();
-    }).join();
+    sumOfOddsCompletableFuture.thenAccept(s -> latch.countDown());
+    latch.await(1000L,TimeUnit.MILLISECONDS);
+      Assert.assertEquals(expectedSum, sumOfOddsCompletableFuture.get());
 
-    longCompletableFuture.get();
     // Implementation hint: look at #CompletionStage.thenAccept
     // Also remember to wait for the completion of the test before continuing the test
     // for instance, use a CountdownLatch and wait for it outside
@@ -106,13 +99,15 @@ public class TestNumbersGame {
   @Test
   public void testAsyncSumOfEvens() throws ExecutionException, InterruptedException {
     Long expectedSum = 148L;
-    latch = new CountDownLatch(1);
-    CompletableFuture<Long> longCompletableFuture = numbersGame.sumOfEvensAsync().toCompletableFuture();
+    CountDownLatch latch = new CountDownLatch(1);
+    CompletableFuture<Long> sumOfEvensCompletable = numbersGame.sumOfEvensAsync().toCompletableFuture();
 
-    longCompletableFuture.thenAccept(a ->{
-      Assert.assertEquals(expectedSum,a);
-      latch.countDown();
-    }).join();    // Implementation hint: look at #CompletionStage.thenAccept
+    sumOfEvensCompletable.thenAccept(s -> latch.countDown());
+      latch.await(5000L,TimeUnit.MILLISECONDS);
+
+      Assert.assertEquals(expectedSum, sumOfEvensCompletable.get());
+
+    // Implementation hint: look at #CompletionStage.thenAccept
     // Also remember to wait for the completion of the test before continuing the test
     // for instance, use a CountdownLatch and wait for it outside
   }
@@ -121,13 +116,19 @@ public class TestNumbersGame {
   public void testAsyncSumOfEvensAndOddsEqualsSum() throws ExecutionException, InterruptedException {
     // todo: implement a test that shows that "sumOfEvensAsync() + sumOfOddsAsync == sumAsync()"
     // todo: implement the assertion of the result
-    latch = new CountDownLatch(1);
+    CountDownLatch latch = new CountDownLatch(3);
+    CompletableFuture<Long> sumOfAllCompletableFuture = numbersGame.sumAsync().toCompletableFuture();
     CompletableFuture<Long> sumOfEvensCompletableFuture = numbersGame.sumOfEvensAsync().toCompletableFuture();
     CompletableFuture<Long> sumOfOddsCompletableFuture = numbersGame.sumOfOddsAsync().toCompletableFuture();
-    CompletableFuture<Long> sumOfAllCompletableFuture = numbersGame.sumAsync().toCompletableFuture();
-    Assert.assertEquals(sumOfEvensCompletableFuture.get() + sumOfOddsCompletableFuture.get(), sumOfAllCompletableFuture.get().longValue();
 
-    latch.countDown();
+    sumOfAllCompletableFuture.thenAccept(s -> latch.countDown());
+    sumOfEvensCompletableFuture.thenAccept(s -> latch.countDown());
+    sumOfOddsCompletableFuture.thenAccept(s -> latch.countDown());
+
+    latch.await(5000L, TimeUnit.MILLISECONDS);
+    Assert.assertEquals(sumOfEvensCompletableFuture.get() + sumOfOddsCompletableFuture.get(), sumOfAllCompletableFuture.get().longValue());
+
+
     // Implementation hint: see if you can combine the previous three methods in a smart way using
     // the completion stages
     // Also remember to wait for the completion of the test before continuing the test
